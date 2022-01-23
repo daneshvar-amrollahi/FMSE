@@ -24,3 +24,25 @@ The tool supports a range of different verification algorithms, including depth-
 breadth-first, parallel/multi-core, bounded depth, bitstate search (using Bloom filter
 theory), partial order reduced, and swarm search (using arbitrarily many cpus).
 
+
+## How to run new examples:
+
+```
+    daneshvar@daneshvar-ZenBook:~/Desktop/FM/Final-Project/Spin-ModelChecking/Src$ ./spin -a ../Examples/P1-1.pml 
+    ltl p1: [] (((((tokenA+tokenB)+tokenC)+tokenD)<=1))
+    ltl p2: ((([] (<> ((tokenA==1)))) || ([] (<> ((tokenB==1))))) || ([] (<> ((tokenC==1))))) || ([] (<> ((tokenD==1))))
+    ltl p3: ((([] (<> ((tokenA==1)))) && ([] (<> ((tokenB==1))))) && ([] (<> ((tokenC==1))))) && ([] (<> ((tokenD==1))))
+    the model contains 3 never claims: p3, p2, p1
+    only one claim is used in a verification run
+    choose which one with ./pan -a -N name (defaults to -N p1)
+    or use e.g.: spin -search -ltl p1 ../Examples/P1-1.pml
+
+    daneshvar@daneshvar-ZenBook:~/Desktop/FM/Final-Project/Spin-ModelChecking/Src$ gcc -o pan pan.c
+
+    daneshvar@daneshvar-ZenBook:~/Desktop/FM/Final-Project/Spin-ModelChecking/Src$ ./pan -a -N p1
+
+```
+
+p1 can be replaced with other properties (p2 and p3 in our case) as well.
+
+
