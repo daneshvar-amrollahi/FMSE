@@ -4,15 +4,21 @@ bool tokenB = 0;
 bool tokenC = 0;
 bool tokenD = 0;
 
-// ltl p1 {[] (tokenA + tokenB + tokenC + tokenD <= 1)}
+/* ltl p1 {[] (tokenA + tokenB + tokenC + tokenD <= 1)} */
 
-ltl p2 {
+/* ltl p2 {
 	([]<> (tokenA == 1)) ||
 	([]<> (tokenB == 1)) ||
 	([]<> (tokenC == 1)) ||
 	([]<> (tokenC == 1))
-}
+} */
 
+ltl p3 {
+	([]<> (tokenA == 1)) &&
+	([]<> (tokenB == 1)) &&
+	([]<> (tokenC == 1)) &&
+	([]<> (tokenC == 1))
+}
 
 
 
