@@ -1,0 +1,71 @@
+MODULE main ()
+	VAR
+		pressed1 : boolean;
+		pressed2 : boolean;
+		pressed3 : boolean;
+
+		moving_to_1: boolean;
+		moving_to_2: boolean;
+		moving_to_3: boolean;
+
+		pos: {1, 2, 3};
+
+	--assumption: when the elevator is at floor X, pressedX never becomes true
+	--assumption: In equal cases, the elevator always goes down
+
+	ASSIGN
+		init(pressed1) := FALSE;
+		init(pressed2) := FALSE;
+		init(pressed3) := FALSE;
+		init(pos) := 1;
+
+		next(moving_to_1) := 
+			case
+				moving_to_2 | moving_to_3 : FALSE; --ignore while moving
+				pressed1 & !(pressed2) & !(pressed3): TRUE;
+				pressed1 & !(pressed2) & pressed3 & (pos = 2): TRUE;
+				pressed1 & pressed2 & !(pressed3): FALSE;
+				pressed1 & pressed2 & pressed3 & (pos = 2): TRUE;
+				TRUE: FALSE; 
+			esac;
+
+		next(moving_to_2) := 
+			case
+				moving_to_1 | moving_to_3 : FALSE; --ignore while moving
+				pressed2 & !(pressed1) & !(pressed3): TRUE;
+				pressed2 & !(pressed1) & pressed3: FALSE;
+				pressed2 & pressed1 & pressed3 & (pos = 3): TRUE;
+				pressed2 & pressed1 & !(pressed3) & (pos = 3): TRUE; 
+				TRUE: FALSE; 
+			esac;
+
+		next(moving_to_3) := 
+			case
+				moving_to_1 | moving_to_2 : FALSE; --ignore while moving
+				pressed3 & !(pressed1) & !(pressed2): TRUE;
+				pressed3 & !(pressed1) & pressed2: FALSE;
+				pressed3 & pressed1 & pressed2: FALSE; 
+				pressed3 & pressed1 & !(pressed2): FALSE; 
+				TRUE: FALSE; 
+			esac;
+
+		next(pos) :=
+			case
+				pos = 1 & (moving_to_2 | moving_to_3): 2;
+				pos = 2 & moving_to_1: 1;
+				pos = 2 & moving_to_3: 3;
+				pos = 3 & (moving_to_1 | moving_to_2): 2;
+				TRUE: pos;
+			esac;
+
+
+		FAIRNESS
+			pos = 1	
+		FAIRNESS
+			pos = 2
+		FAIRNESS
+			pos = 3
+
+LTLSPEC G (!(pressed1 | pressed2 | pressed3) -> X !(moving_to_1 | moving_to_2 | moving_to_3));
+
+SPEC (AF (pos = 1)) & (AF (pos = 2)) & (AF (pos = 3))
