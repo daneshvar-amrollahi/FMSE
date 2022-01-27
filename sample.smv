@@ -1,0 +1,8 @@
+MODULE main ()
+VAR
+signal : boolean;
+echo : boolean;
+ASSIGN
+init(echo) := FALSE;
+next(echo) := signal & TRUE;
+LTLSPEC G (signal <-> X (echo));
