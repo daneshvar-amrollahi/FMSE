@@ -4,9 +4,9 @@ bool tokenB = 0;
 bool tokenC = 0;
 bool tokenD = 0;
 
-ltl p1 {[] (tokenA + tokenB + tokenC + tokenD <= 1)} 
+ltl p1 {[] (tokenA + tokenB + tokenC + tokenD <= 1)} //satisfied
 
-ltl p2 {
+ltl p2 { //satisfied
 	([]<> (tokenA == 1)) ||
 	([]<> (tokenB == 1)) ||
 	([]<> (tokenC == 1)) ||
@@ -14,7 +14,7 @@ ltl p2 {
 } 
 
 
-ltl p3 {
+ltl p3 { //satisfied
 	([]<> (tokenA == 1)) &&
 	([]<> (tokenB == 1)) &&
 	([]<> (tokenC == 1)) &&
@@ -57,5 +57,4 @@ init {
 		run C();
 		run D();
 	}
-	
 }
