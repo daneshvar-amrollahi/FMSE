@@ -66,6 +66,8 @@ MODULE main ()
 		FAIRNESS
 			pos = 3
 
-LTLSPEC G (!(pressed1 | pressed2 | pressed3) -> X !(moving_to_1 | moving_to_2 | moving_to_3));
+LTLSPEC G (!(pressed1 | pressed2 | pressed3) -> X !(moving_to_1 | moving_to_2 | moving_to_3)); --spec1
 
-SPEC (AF (pos = 1)) & (AF (pos = 2)) & (AF (pos = 3))
+SPEC (AF (pos = 1)) & (AF (pos = 2)) & (AF (pos = 3)) --spec3
+
+-- LTLSPEC G ( (pos = 1 & X (moving_to_3)) -> X (X (moving_to_3))) not changing directions
